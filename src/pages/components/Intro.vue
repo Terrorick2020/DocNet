@@ -34,7 +34,7 @@
             width: 50%;
 
             .text__title {
-                font-size: 32px;
+                @include Title;
             }
 
             .text_description {
@@ -65,7 +65,7 @@
                     translate: 0 1px;
 
                     path {
-                        fill: #1dc7cd;
+                        fill: $main-font-color;
                     }
                 }
 

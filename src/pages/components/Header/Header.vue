@@ -52,21 +52,9 @@ const openMobileMenu = () => {
 
 <style lang="scss" scoped>
 .wrapper__header {
-    // @include Box;
     width: 100%;
     margin-top: 20px;
-    // padding-inline: 10%;
     border-bottom: 3px solid $main-line-color;
-
-    // @media ( max-width: 1280px  ) {
-    //     padding-inline: 7%;
-    // }
-
-    // @media ( max-width: 1160px  ) {
-    //     padding-inline: 4%;
-    // }
-
-    // 1090
 
     .header__conteiner {
         display: flex;
@@ -77,12 +65,28 @@ const openMobileMenu = () => {
         .conteiner__logo {
             display: flex;
             flex-direction: row;
+            align-items: center;
             justify-content: start;
             gap: 20px;
+
+            @media ( max-width: 490px ) {
+                gap: 0px;
+                width: 250px;
+            }
 
             .logo__img {
                 user-select: none;
                 width: 80px;
+                height: auto;
+
+                @media ( max-width: 490px ) {
+                    scale: 0.8;
+                }
+
+                @media ( max-width: 425px ) {
+                    width: 60px;
+                    height: 60px;
+                }
             }
 
             .logo__text {
@@ -90,12 +94,21 @@ const openMobileMenu = () => {
 
                 h1 {
                     @include Title;
-
+                    font-size: 36px !important;
                 }
 
                 p {
                     margin-top: 5px;
                     letter-spacing: -0.5px;
+                }
+
+                @media ( max-width: 1090px ) {
+                    scale: 0.9;
+                    width: 300px;
+                }
+
+                @media ( max-width: 490px ) {
+                    scale: 0.8;
                 }
             }
         }
@@ -107,6 +120,11 @@ const openMobileMenu = () => {
                 flex-direction: row;
                 justify-content: center;
                 gap: 40px;
+
+                @media ( max-width: 1090px ) {
+                    gap: 20px;
+                    translate: -20px 0;
+                }
 
                 .list__item {
                     position: relative;
@@ -147,6 +165,10 @@ const openMobileMenu = () => {
                 translate: 5px -5px;
                 color: $main-line-color;
                 box-shadow: -5px 5px 5px $main-line-color;
+            }
+
+            @media ( max-width: 1090px ) {
+                scale: 0.9;
             }
         }
     }

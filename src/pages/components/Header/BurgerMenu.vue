@@ -25,6 +25,10 @@ function handleToggleMenu() {
   cursor: pointer;
   z-index: 100;
 
+  @media ( max-width: 490px ) {
+    scale: 0.8;
+  }
+
   .line {
     width: 100%;
     height: 4px;
