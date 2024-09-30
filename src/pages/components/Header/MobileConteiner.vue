@@ -2,7 +2,7 @@
     <div class="header__conteiner-mobile">
             <nav class="conteiner__nav-mobile">
                 <ul class="nav__list-mobile">
-                    <li class="list__item-mobile" v-for="item in head_content" :key="item.id">
+                    <li class="list__item-mobile" v-for="item in props.head_content.nav" :key="item.id">
                         <a href="#">
                             {{ item.name }}
                         </a>
@@ -16,12 +16,16 @@
 import { defineProps } from 'vue';
 
 
-const props = defineProps<{ 
-    head_content: any[] 
-}>();
+const props = defineProps<{
+    head_content: {
+        nav: any[],
+        button: Object
+    }
+}>()
 </script>
 
 <style scoped lang="scss">
+
 .header__conteiner-mobile {
     margin-top: 20px;
 

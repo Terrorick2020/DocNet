@@ -1,3 +1,35 @@
 <template>
-    
+    <Header :head_content="head_content" />
+    <main class="wrapper__main-auth box">
+        <AuthConteiner />
+    </main>
+    <Footer />
 </template>
+
+<script setup lang="ts">
+import Footer from './components/Footer/Footer.vue';
+import AuthConteiner from './components/Auth/AuthConteiner.vue';
+import Header from './components/Header/Header.vue';
+
+
+const head_content = {
+    button: {
+        to: '/',
+        text: 'На главную'
+    },
+    nav: [] 
+}
+</script>
+
+<style lang="scss">
+.wrapper__main-auth {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100dvh;
+    background: url('../assets/img/background_reg.jpg') rgba(0, 0, 0, 0.5);
+    background-size: 100% 100%;
+    background-blend-mode: multiply;
+    background-repeat: no-repeat;
+}
+</style>

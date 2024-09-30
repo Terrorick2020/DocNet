@@ -2,17 +2,19 @@ import { createRouter, createWebHashHistory } from "vue-router";
 
 import InfoPage from "../pages/InfoPage.vue";
 import AuthPage from "../pages/AuthPage.vue";
+import ClientPage from "../pages/ClientPage.vue";
 
 
 const router = createRouter({
     history: createWebHashHistory(),
     routes: [
         {
-            path: '/info',
+            path: '/home',
             alias: '/',
             name: 'InfoPage',
             meta: {
-                title: 'Главная'
+                title: 'Главная',
+                needAuth: false
             },
             component: InfoPage
         },
@@ -20,9 +22,19 @@ const router = createRouter({
             path: '/auth',
             name: 'AuthPage',
             meta: {
-                title: 'Авторизация'
+                title: 'Авторизация',
+                needAuth: false
             },
             component: AuthPage
+        },
+        {
+            package: '/home',
+            name: ClientPage,
+            meta: {
+                title: 'Личный кабинет',
+                needAuth: true
+            },
+            component: ClientPage
         }
     ]
 })

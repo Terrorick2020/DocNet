@@ -10,24 +10,30 @@
 
 <script setup lang="ts">
 import Header from './components/Header/Header.vue';
-import Intro from './components/Intro.vue';
-import ScopeApplication from './components/ScopeApplication.vue';
-import Advantages from './components/Advantages.vue';
-import Footer from './components/Footer.vue'
+import Intro from './components/Info/Intro.vue';
+import ScopeApplication from './components/Info/ScopeApplication.vue';
+import Advantages from './components/Info/Advantages.vue';
+import Footer from './components/Footer/Footer.vue'
 
 
-const head_content = [
-    {
-        id: 0,
-        name: 'Вступление'
+const head_content = {
+    button: {
+        to: '/auth',
+        text: 'Вход / Регистрация'
     },
-    {
-        id: 1,
-        name: 'Обновления'
-    },
-    {
-        id: 2,
-        name: 'О нас'
-    }
-]
+    nav: [
+        {
+            id: 0,
+            name: 'Вступление'
+        },
+        {
+            id: 1,
+            name: 'Обновления'
+        },
+        {
+            id: 2,
+            name: 'О нас'
+        }
+    ] 
+}
 </script>

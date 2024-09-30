@@ -12,7 +12,7 @@
                 </RouterLink>
             </div>
             <div class="conteiner__animation">
-                <img src="../../assets/img/blockchein.gif" alt="blockchein">
+                <img src="../../../assets/img/blockchein.gif" alt="blockchein">
             </div>
         </div>
     </div>
@@ -22,6 +22,7 @@
 .wrapper__intro {
     margin-top: 80px;
     width: 100%;
+    margin-bottom: 100px;
 
     .intro__conteiner {
         width: 100%;
@@ -78,7 +79,9 @@
         }
 
         .conteiner__animation {
+            user-select: none;
             width: 40%;
+
             img {
                 border-radius: 20px;
                 width: 500px;

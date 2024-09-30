@@ -10,17 +10,17 @@
             </a>
             <nav class="conteiner__nav" v-if="width_screen > 1024">
                 <ul class="nav__list">
-                    <li class="list__item" v-for="item in head_content" :key="item.id">
-                        <a href="#">
+                    <li class="list__item" v-for="item in props.head_content.nav" :key="item.id">
+                        <a>
                             {{ item.name }}
                         </a>
                     </li>
                 </ul>
             </nav>
-            <RouterLink class="conteiner__auth" to="/auth" v-if="width_screen > 1024">Регистрация / Вход</RouterLink>
-            <BurgerMenu v-else @click="openMobileMenu" />
+            <RouterLink class="conteiner__auth" :to="head_content.button.to" v-if="width_screen > 1024">{{ head_content.button.text }}</RouterLink>
+            <BurgerMenu v-else @click="openMobilteMenu" />
         </div>
-        <MobileConteiner :class="`header__mobile-menu ${ mobileMenuIsOpen ? 'show' : 'unshow' }`" :head_content="head_content" />
+        <MobileConteiner :class="`header__mobile-menu ${ mobileMenuIsOpen ? 'show' : 'unshow' }`" :head_content="props.head_content" />
     </header>
 </template>
 
@@ -33,7 +33,10 @@ import MobileConteiner from './MobileConteiner.vue'
 
 // Обработка props
 const props = defineProps<{
-    head_content: any[] // Предполагаю, что это массив
+    head_content: {
+        nav: any[],
+        button: Object
+    }
 }>()
 
 // Обработка изменения ширины экрана
@@ -127,6 +130,7 @@ const openMobileMenu = () => {
                 }
 
                 .list__item {
+                    cursor: pointer;
                     position: relative;
 
                     &::after {
