@@ -1,30 +1,20 @@
 <template>
-    <div>
-        fdbdrdrb
+    <div class="main__form">
+        <AuthContent />
     </div>
-    <form class="auth__form">
-        <h1>Регистрация</h1>
-        <div v-for="elem, index in props.authFormContent" :key="index">
-            <label for="">{{ elem.label }}</label>
-            <input :type="elem.type">
-        </div>
-    </form>
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue'
-
-const props = defineProps<{
-    authFormContent: {
-        title: string,
-        content: any[]
-    }
-}>()
+import AuthContent from './AuthContent.vue';
 </script>
 
 <style lang="scss">
-.auth__form {
-    width: 100%;
-    height: 100%;
+.main__form {
+    width: 30vw;
+    height: 40vw;
+    padding: 6% 4%;
+    border: 2px solid white;
+    border-radius: 20px;
+    box-shadow: -5px 5px 5px rgba(255, 255, 255, 0.5);
 }
 </style>

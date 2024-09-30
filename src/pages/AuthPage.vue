@@ -1,14 +1,14 @@
 <template>
     <Header :head_content="head_content" />
     <main class="wrapper__main-auth box">
-        <AuthConteiner />
+        <AuthForm />
     </main>
     <Footer />
 </template>
 
 <script setup lang="ts">
 import Footer from './components/Footer/Footer.vue';
-import AuthConteiner from './components/Auth/AuthConteiner.vue';
+import AuthForm from './components/Auth/AuthForm.vue'
 import Header from './components/Header/Header.vue';
 
 

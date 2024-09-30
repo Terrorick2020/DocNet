@@ -28,8 +28,8 @@ const router = createRouter({
             component: AuthPage
         },
         {
-            package: '/home',
-            name: ClientPage,
+            path: '/client',
+            name: 'ClientPage',
             meta: {
                 title: 'Личный кабинет',
                 needAuth: true

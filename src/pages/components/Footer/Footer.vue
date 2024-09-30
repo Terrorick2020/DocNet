@@ -2,7 +2,7 @@
     <footer class="wrapper__footer box">
         <div class="footer__conteiner">
             <div class="conteiner__preview">
-                <img src="../../../assets/img/logo.png" alt="logo">
+                <img src="../../../assets/img/logo_mozh.png" alt="logo">
                 <p>&COPY; 2024 Все права защищены!</p>              
             </div>
             <div class="conteiner__state">
@@ -42,6 +42,8 @@
 
         .conteiner__preview {
             img {
+                width: 100px;
+                height: auto;
                 user-select: none;
             }
 
@@ -54,11 +56,12 @@
             height: 100%;
 
             ul {
-                margin-top: 20px;
+                margin-top: 25px;
                 height: 100%;
                 display: flex;
                 flex-direction: column;
-                gap: 15px;
+                align-content: space-between;
+                gap: 30px;
             }
         }
 
