@@ -23,9 +23,7 @@ const head_content = {
 
 <style lang="scss">
 .wrapper__main-auth {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include FlexRow( center );
     height: 100dvh;
     background: url('../assets/img/background_reg.jpg') rgba(0, 0, 0, 0.5);
     background-size: 100% 100%;

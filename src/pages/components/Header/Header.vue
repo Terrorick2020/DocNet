@@ -60,16 +60,10 @@ const openMobileMenu = () => {
     border-bottom: 3px solid $main-line-color;
 
     .header__conteiner {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
+        @include FlexRow;
 
         .conteiner__logo {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: start;
+            @include FlexRow( start );
             gap: 20px;
 
             @media ( max-width: 490px ) {
@@ -119,9 +113,7 @@ const openMobileMenu = () => {
         .conteiner__nav {
 
             .nav__list {
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
+                @include FlexRow( center );
                 gap: 40px;
 
                 @media ( max-width: 1090px ) {

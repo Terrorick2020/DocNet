@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from "vue-router";
 
 import InfoPage from "../pages/InfoPage.vue";
 import AuthPage from "../pages/AuthPage.vue";
+import DocumentsPage from "../pages/DocumentsPage.vue";
 import ClientPage from "../pages/ClientPage.vue";
 
 
@@ -9,7 +10,7 @@ const router = createRouter({
     history: createWebHashHistory(),
     routes: [
         {
-            path: '/home',
+            path: '/info',
             alias: '/',
             name: 'InfoPage',
             meta: {
@@ -26,6 +27,15 @@ const router = createRouter({
                 needAuth: false
             },
             component: AuthPage
+        },
+        {
+            path: '/home',
+            name: 'DocumentsPage',
+            meta: {
+                title: 'Приказы',
+                needAuth: true
+            },
+            component: DocumentsPage
         },
         {
             path: '/client',

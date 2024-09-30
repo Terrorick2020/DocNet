@@ -45,36 +45,12 @@
 
             .text__link {
                 margin-top: 50px;
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                align-items: center;
+                @include ItemLink;
                 gap: 10px;
                 width: 220px;
                 height: 58px;
                 border: 2px solid;
                 border-radius: 30px;
-
-                p {
-                    font-size: 16px;
-                }
-
-                svg {
-                    width: 14px;
-                    height: auto;
-                    transition: all 0.5s ease;
-                    translate: 0 1px;
-
-                    path {
-                        fill: $main-font-color;
-                    }
-                }
-
-                &:hover {
-                    svg {
-                        translate: 10px 1px;
-                    }
-                }
             }
         }
 

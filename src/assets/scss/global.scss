@@ -32,10 +32,19 @@ select {
 
 input,
 textarea,
-select,
-button {
+select{
     background: transparent;
     border: none;
+    cursor: pointer;
+}
+
+button {
+    cursor: pointer;
+}
+
+input,
+textarea {
+    font-size: 18px;
 }
 
 a {
