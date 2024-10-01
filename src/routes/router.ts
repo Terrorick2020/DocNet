@@ -4,6 +4,7 @@ import InfoPage from "../pages/InfoPage.vue";
 import AuthPage from "../pages/AuthPage.vue";
 import DocumentsPage from "../pages/DocumentsPage.vue";
 import ClientPage from "../pages/ClientPage.vue";
+import PdfPage from "../pages/PdfPage.vue";
 
 
 const router = createRouter({
@@ -29,13 +30,22 @@ const router = createRouter({
             component: AuthPage
         },
         {
-            path: '/home',
+            path: '/documents',
             name: 'DocumentsPage',
             meta: {
-                title: 'Приказы',
+                title: 'Список приказов',
                 needAuth: true
             },
             component: DocumentsPage
+        },
+        {
+            path: '/document/:id',
+            name: 'PdfPage',
+            meta: {
+                title: 'Приказ',
+                needAuth: true
+            },
+            component: PdfPage
         },
         {
             path: '/client',

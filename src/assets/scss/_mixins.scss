@@ -9,7 +9,7 @@
     display: flex;
     flex-direction: $f_dir;
     justify-content: $j_con;
-    align-self: a_ite;
+    align-items: $a_ite;
 }
 
 @mixin FlexRow( $j_pos: space-between, $a_pos: center ) {

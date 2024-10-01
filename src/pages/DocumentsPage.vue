@@ -25,10 +25,9 @@ const head_content = {
 }
 </script>
 
-<style>
+<style lang="scss">
 .wrapper__main-documents {
-    display: flex;
-    flex-direction: center;
+    @include Flex;
     margin: 100px 0;
 }
 </style>
