@@ -9,12 +9,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vue-pdf-viewer/viewer": "^1.4.0",
     "pinia": "^2.2.2",
     "vue": "^3.5.10",
+    "vue-pdf": "^4.3.0",
     "vue-router": "^4.4.5"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.1.2",
+    "@vitejs/plugin-vue": "^5.1.4",
     "sass": "^1.79.4",
     "sass-loader": "^10.5.2",
     "typescript": "^5.5.3",

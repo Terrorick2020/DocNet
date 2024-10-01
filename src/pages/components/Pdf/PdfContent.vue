@@ -1,17 +1,28 @@
 <template>
     <div class="main__pdf">
-        <embed  src="../../../assets/pdf/1.pdf" frameborder="4" width="800" height="500" class="pdf__content"></embed >
+        <div :style="{ width: '1028px', height: '700px' }">
+            <VPdfViewer
+            src="/src/assets/pdf/3.pdf"
+            base="http://localhost:5175"
+            />
+        </div>
     </div>
 </template>
+
+<script setup lang="ts">
+import { VPdfViewer } from "@vue-pdf-viewer/viewer";
+</script>
 
 <style lang="scss">
 .main__pdf {
     margin: 100px 0;
     @include Flex;
+    pointer-events: none;
 
     .pdf__content {
-        width: 70%;
+        width: 400px;
         height: 500px;
+        pointer-events: auto;
     }
 }
 </style>

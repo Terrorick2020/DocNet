@@ -20,6 +20,11 @@ export default defineConfig({
     alias: {
       '@': './src',
     },
+  },
+  server: {
+    cors: true,
+    port: 5173,
+    host: true,
   }
 })
 
