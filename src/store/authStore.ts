@@ -15,30 +15,25 @@ export const authStore = defineStore('authStore', {
 		id: null,
 		username: '',
 		name: '',
-		role: 'Guest',
-		key: '',
-		token: ''
+		role: 'Guest'
 	}),
 	actions: {
 		async regUser(
 			regConfig: AuthConfig
-		): Promise<{ success: boolean; message?: string; key?: string }> {
+		): Promise<{ success: boolean; message?: string }> {
 			try {
 				const regResponse = await axios.post(
 					BASE_URL + '/auth/register',
 					regConfig
 				)
 
-				if (!regResponse || regResponse.status !== 201) {
-					console.log(regResponse)
+				console.table({ regConfig, regResponse }) // убрать логирование
+
+				if (!regResponse || !regResponse.data.success) {
 					throw new Error('Registration failed')
 				}
-				this.key = regResponse.data
-				return {
-					success: true,
-					message: 'Registration successful',
-					key: regResponse.data
-				}
+
+				return { success: true, message: 'Registration successful' }
 			} catch (err: unknown) {
 				if (err instanceof Error) {
 					console.error(err.message)
@@ -54,7 +49,7 @@ export const authStore = defineStore('authStore', {
 		},
 		async loginUser(
 			logConfig: AuthConfig
-		): Promise<{ success: boolean; message?: string; token?: string }> {
+		): Promise<{ success: boolean; message?: string }> {
 			try {
 				const logResponse = await axios.post(BASE_URL + 'auth/login', logConfig)
 
