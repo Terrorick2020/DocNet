@@ -16,26 +16,34 @@ export const authStore = defineStore('authStore', {
 		username: '',
 		name: '',
 		role: 'Guest',
-		token: '',
-		key: ''
+		key: '',
+		token: ''
 	}),
 	actions: {
 		async regUser(
 			regConfig: AuthConfig
-		): Promise<{ success: boolean; message?: string }> {
+		): Promise<{ success: boolean; message?: string; key?: string }> {
 			try {
 				const regResponse = await axios.post(
 					BASE_URL + '/auth/register',
 					regConfig
 				)
 
-				console.table({ regConfig, regResponse }) // убрать логирование
-
-				if (!regResponse || !regResponse.data.success) {
+				if (!regResponse || regResponse.status !== 201) {
+					console.log(regResponse)
 					throw new Error('Registration failed')
 				}
-				this.key = regResponse.data
-				return { success: true, message: 'Registration successful' }
+				this.key = regResponse.data.key
+				this.token = regResponse.data.token
+
+				console.log(this.key)
+				console.log('--------------------------------------------------------')
+				console.log(this.token)
+				return {
+					success: true,
+					message: 'Registration successful',
+					key: regResponse.data
+				}
 			} catch (err: unknown) {
 				if (err instanceof Error) {
 					console.error(err.message)
@@ -51,14 +59,14 @@ export const authStore = defineStore('authStore', {
 		},
 		async loginUser(
 			logConfig: AuthConfig
-		): Promise<{ success: boolean; message?: string }> {
+		): Promise<{ success: boolean; message?: string; token?: string }> {
 			try {
 				const logResponse = await axios.post(BASE_URL + 'auth/login', logConfig)
 
 				if (!logResponse || !logResponse.data.success) {
 					throw new Error('Login failed')
 				}
-
+				//  token
 				return { success: true, message: 'Login successful' }
 			} catch (error: unknown) {
 				if (error instanceof Error) {
