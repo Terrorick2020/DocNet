@@ -15,6 +15,10 @@ interface LogConfig {
 	password: string
 }
 
+interface UserConfig {
+	access_token: string
+}
+
 export const authStore = defineStore('authStore', {
 	state: () => ({
 		id: null,
@@ -42,7 +46,7 @@ export const authStore = defineStore('authStore', {
 					this.token = regResponse.data.token
 					this.status = 'success'
 				}
-				
+
 				// TODO:
 				// убрать логи
 				console.log(this.key)
@@ -78,30 +82,28 @@ export const authStore = defineStore('authStore', {
 				console.info(`Unexpected error: ${err.message}`)
 			}
 		},
-		async getUser(
-			userConfig: any
-		): Promise<{ success: boolean; message?: string }> {
+
+		async getUser(userConfig: UserConfig) {
 			try {
 				const userResponse = await axios.post(
-					BASE_URL + 'auth/profile',
+					BASE_URL + '/auth/profile',
 					userConfig
 				)
 
-				if (!userResponse || !userResponse.data.success) {
-					throw new Error('Failed to get user config')
+				if (userResponse.data.result === 'failed') {
+					this.status = 'failed'
+					console.log(userResponse.data.data)
+				} else {
+					this.username = userResponse.data.username
+					this.name = userResponse.data.name
+					this.role = userResponse.data.role
+					this.status = 'success'
 				}
-
-				return { success: true, message: 'User info retrieved successfully' }
 			} catch (error: unknown) {
 				if (error instanceof Error) {
-					console.error(error.message)
-					return {
-						success: false,
-						message: error.message || 'Failed to get user config'
-					}
+					console.info(error.message)
 				} else {
 					console.error('Неизвестная ошибка:', error)
-					return { success: false, message: 'Unknown error occurred' }
 				}
 			}
 		}
