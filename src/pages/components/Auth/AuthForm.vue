@@ -46,13 +46,13 @@
 			</div>
 			<div class="form__item" v-if="isReg" :style="`border-color: ${( (password != repass) || ( !repass && isCliced ) ) && isReg ? '#d00754' : ''};`">
 				<label
-					for="password"
+					for="repass"
 					:style="`top: ${ isFocusRePassword || repass ? '-20px' : '0px' }`"
 					>Повторите пароль</label
 				>
 				<input
 					type="password"
-					id="password"
+					id="repass"
 					v-model="repass"
 					@focus="upRePasswordInput"
 					@blur="downRePasswordInput"
@@ -128,20 +128,24 @@
 	// поля для ввода репаса и имени
 	const regUser = async (username: string, password: string) => {
 		isCliced.value = true
-		await AuthStore.regUser({
-			username: username,
-			password: password,
-			repass: password,
-			name: username
-		})
+		// await AuthStore.regUser({
+		// 	username: username,
+		// 	password: password,
+		// 	repass: password,
+		// 	name: username
+		// })
+
+		if( AuthStore.token ) {
+			router.push('/client')
+		}
 	}
 
 	const loginUser = async (username: string, password: string) => {
 		isCliced.value = true
-		await AuthStore.loginUser({
-			username: username,
-			password: password
-		})
+		// await AuthStore.loginUser({
+		// 	username: username,
+		// 	password: password
+		// })
 
 		if( AuthStore.token ) {
 			router.push('/client')

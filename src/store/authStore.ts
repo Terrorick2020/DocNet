@@ -22,7 +22,7 @@ export const authStore = defineStore('authStore', {
 		name: '',
 		role: 'Guest',
 		key: '',
-		token: '',
+		token: 'xccxcxcxcxc',
 		status: ''
 	}),
 
