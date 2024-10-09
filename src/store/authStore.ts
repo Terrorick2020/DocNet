@@ -21,17 +21,22 @@ interface UserConfig {
 
 export const authStore = defineStore('authStore', {
 	state: () => ({
-		id: null,
+		// конфиг при регистрации
 		username: '',
-		nickname: 'Fallen Angel',
-		name: 'Дудкин Александр Сергеевич',
-		post: 'Зам. нач. кафедры',
-		division: '61 кафедра',
-		img: '',
+		name: 'Дудкин Александр Сергеевич', // передаем надо добавить в AuthForm ввод имени
+
 		role: 'Guest',
-		key: '',
-		token: 'xccxcxcxcxc',
-		status: ''
+
+		post: 'Зам. нач. кафедры', // не передаем а надо завтра вместе надо решить по какой логике это делать типа при редактировании лк или регистрации
+		division: '61 кафедра', // тоже самое
+
+		key: '', // получаем
+		token: '', // получаем
+		status: '', // получаем
+
+		id: null, // не передаем
+		nickname: 'Fallen Angel', // не передаем
+		img: '' // не передаем
 	}),
 
 	actions: {
@@ -49,6 +54,8 @@ export const authStore = defineStore('authStore', {
 					this.key = regResponse.data.key
 					this.token = regResponse.data.token
 					this.status = 'success'
+					this.username = regConfig.username
+					this.name = regConfig.name
 				}
 
 				// TODO:
@@ -76,6 +83,7 @@ export const authStore = defineStore('authStore', {
 				} else {
 					this.token = logResponse.data.access_token
 					this.status = 'success'
+					this.username = logConfig.username
 				}
 				// TODO:
 				// убрать логи
