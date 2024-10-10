@@ -42,6 +42,11 @@ const newPost = ref( AuthStore.post )
 const newDivision = ref( AuthStore.division )
 
 const editClientInfo = () => {
+    AuthStore.editPersInfo({
+        name: String( newFullName ),
+        post: String( newPost ),
+        division: String( newDivision )
+    })
     PagesStore.editClientInfo()
 }
 </script>
