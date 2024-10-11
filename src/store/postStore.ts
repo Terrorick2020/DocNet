@@ -100,7 +100,7 @@ export const postStore = defineStore('postStore', {
 			try {
 				const formData = new FormData()
 				formData.append('file', subscribeConfig.key)
-
+				console.log(subscribeConfig.id)
 				const subscribePostResponse = await axios.post(
 					`${BASE_URL}/sign/${subscribeConfig.id}`,
 					formData,

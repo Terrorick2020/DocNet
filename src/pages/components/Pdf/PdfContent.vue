@@ -3,13 +3,12 @@
 		<div class="status__text">
 			<p>
 				Статус:
-				<span :style="{ background: isSuccessStatus ? '#1bb28a' : '#77173c' }">
+				<span :style="`background: ${isSuccessStatus ? '#1bb28a' : '#77173c'}`">
 					{{ isSuccessStatus ? 'Подписан' : 'Не подписан' }}
 				</span>
 			</p>
 		</div>
 	</div>
-
 	<div class="main__pdf">
 		<div class="pdf__content" :style="{ width: '1028px', height: '700px' }">
 			<VPdfViewer v-if="pdfSrc" :src="pdfSrc" base="http://localhost:5173" />
@@ -18,7 +17,6 @@
 			</div>
 		</div>
 	</div>
-
 	<form v-if="!isSuccessStatus && pdfSrc" class="status__form">
 		<button type="button">
 			Поставить подпись
@@ -45,8 +43,7 @@ const postId = Number(route.params.id)
 
 PostStore.getPost(postId)
 	.then(() => {
-		// isSuccessStatus.value = PostStore.checkSig(AuthStore.id)
-		isSuccessStatus.value = PostStore.checkSig(1)
+		isSuccessStatus.value = PostStore.checkSig(AuthStore.id)
 	})
 	.catch(error => {
 		console.error('Ошибка при получении поста:', error)
@@ -70,8 +67,7 @@ const handleKeyFileChange = async (event: Event) => {
 	if (target.files && target.files[0]) {
 		keyFile.value = target.files[0]
 		try {
-			const id = PostStore.post.id
-			await PostStore.subscribePost({ id: id, key: keyFile.value })
+			await PostStore.subscribePost({ id: postId, key: keyFile.value })
 			if (PostStore.status === 'success') {
 				isSuccessStatus.value = true
 			} else {

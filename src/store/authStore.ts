@@ -32,8 +32,7 @@ export const authStore = defineStore('authStore', {
 		post: '',
 		division: '',
 		key: '',
-		token:
-			'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0YTFraW4iLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg2NzU2NjgsImV4cCI6MTcyODY4MTY2OH0.iVVmp33uQDwnjnbh7u-krWfSsvlRhssh3h64o2C6r5A',
+		token: '',
 		status: ''
 	}),
 
@@ -160,5 +159,6 @@ export const authStore = defineStore('authStore', {
 		getUserRole(): boolean {
 			return this.role === 'Admin'
 		}
-	}
+	},
+	persist: true
 })
