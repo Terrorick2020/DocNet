@@ -77,7 +77,7 @@ const deleteFile = (index: number) => {
 }
 
 const sendItOut = () => {
-    console.log( 'Sended' )
+    isLoaded.value = false
 }
 </script>
 
