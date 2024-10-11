@@ -1,45 +1,4 @@
 <template>
-<<<<<<< HEAD
-    <div class="main-documents__body">
-        <div class="document_nav-panel">
-            <select name="" id="">
-                <option value="">Наименование</option>
-                <option value="">Должностное лицо</option>
-                <option value="" selected>Дата</option>
-            </select>
-            <div>
-                <input type="text">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                    <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/>
-                </svg>
-            </div>
-        </div>
-        <ul class="document__list">
-            <li v-for="elem in PostStore.postList" :key="elem.id"   class="list__elem">
-                <div class="elem__text">
-                    <div>
-                        <p>{{ elem.title }}</p>
-                        <p>Должностное лицо: 
-                            <span>Неизвестно</span>
-                        </p>
-                        <p>Дата:
-                            <span>Неизвестно</span>
-                        </p>
-                    </div>
-                </div>
-                <RouterLink  :to="`client/documents/id=${ elem.id }`">
-                    <button>
-                        <p>Перейти</p>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                            <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/>
-                        </svg>
-                    </button>
-                </RouterLink>
-            </li>
-        </ul>
-        <button class="document__btn">Показать ещё...</button>
-    </div>
-=======
 	<div class="main-documents__body">
 		<div class="document_nav-panel">
 			<select name="" id="">
@@ -87,7 +46,6 @@
 		</ul>
 		<button class="document__btn">Показать ещё...</button>
 	</div>
->>>>>>> 3253530307c2da9fb192e502dddf928d39526dc3
 </template>
 
 <script setup lang="ts">
@@ -100,12 +58,6 @@ import { postStore } from '../../../store/postStore'
 const AuthStore = authStore()
 const PostStore = postStore()
 
-<<<<<<< HEAD
-const PostStore = postStore()
-
-onMounted(() => {
-    postStore().getPostList()
-=======
 // Реактивный объект для хранения начальников
 const chiefs = ref<{ [key: number]: string }>({})
 
@@ -123,7 +75,6 @@ const fetchChiefs = async () => {
 onMounted(async () => {
 	await PostStore.getPostList()
 	await fetchChiefs()
->>>>>>> 3253530307c2da9fb192e502dddf928d39526dc3
 })
 </script>
 

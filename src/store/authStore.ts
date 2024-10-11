@@ -27,21 +27,6 @@ export const authStore = defineStore('authStore', {
 	state: () => ({
 		id: 0, 
 		username: '',
-<<<<<<< HEAD
-		name: 'Неизвестно', // передаем надо добавить в AuthForm ввод имени
-
-		role: 'Admin',
-
-		post: 'Неизвестно', // не передаем а надо завтра вместе надо решить по какой логике это делать типа при редактировании лк или регистрации
-		division: 'Неизвестно', // тоже самое
-
-		key: '', // получаем
-		token: 'dvsdvsdvsdv', // получаем
-		status: '', // получаем
-
-		id: null, // не передаем
-		img: '' // не передаем
-=======
 		name: '', 
 		role: 'Guest',
 		post: '', 
@@ -49,7 +34,6 @@ export const authStore = defineStore('authStore', {
 		key: '', 
 		token: '', 
 		status: '', 
->>>>>>> 3253530307c2da9fb192e502dddf928d39526dc3
 	}),
 
 	actions: {
