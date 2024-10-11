@@ -31,13 +31,13 @@ export const authStore = defineStore('authStore', {
 		username: '',
 		name: 'Неизвестно', // передаем надо добавить в AuthForm ввод имени
 
-		role: 'Guest',
+		role: 'Admin',
 
 		post: 'Неизвестно', // не передаем а надо завтра вместе надо решить по какой логике это делать типа при редактировании лк или регистрации
 		division: 'Неизвестно', // тоже самое
 
 		key: '', // получаем
-		token: '', // получаем
+		token: 'dvsdvsdvsdv', // получаем
 		status: '', // получаем
 
 		id: null, // не передаем
@@ -145,5 +145,9 @@ export const authStore = defineStore('authStore', {
 			this.status = ''
 		}
 	},
-	getters: {}
+	getters: {
+		getUserRole(): boolean {
+			return this.role === 'Admin'
+		}
+	}
 })

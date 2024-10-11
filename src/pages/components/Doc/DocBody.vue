@@ -26,7 +26,7 @@
                         </p>
                     </div>
                 </div>
-                <RouterLink  :to="`document/id=${ elem.id }`">
+                <RouterLink  :to="`client/documents/id=${ elem.id }`">
                     <button>
                         <p>Перейти</p>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -45,11 +45,11 @@ import { onMounted } from 'vue'
 import { postStore } from '../../../store/postStore'
 
 
+const PostStore = postStore()
+
 onMounted(() => {
     postStore().getPostList()
 })
-
-
 </script>
 
 <style lang="scss">
