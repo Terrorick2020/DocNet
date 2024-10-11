@@ -8,10 +8,10 @@ interface Post {
 	id: number
 	title: string
 	filename: string
-	content: { type: 'Buffer'; data: number[] }
+	content: string
 	date: string
 	delivered?: boolean
-	signatures?: Array<User>
+	signatures: Array<User>
 	userId: number
 }
 
@@ -56,6 +56,7 @@ export const postStore = defineStore('postStore', {
 			try {
 				const postResponse = await axios.get(`${BASE_URL}/post/${id}`)
 				this.post = postResponse.data.data
+				this.status = postResponse.data.result
 			} catch (error) {
 				console.error('Error fetching post:', error)
 			}
@@ -64,8 +65,8 @@ export const postStore = defineStore('postStore', {
 		async createPost(postConfig: PostConfig) {
 			try {
 				const formData = new FormData()
-    		formData.append('title', postConfig.title)
-    		formData.append('file', postConfig.file)
+				formData.append('title', postConfig.title)
+				formData.append('file', postConfig.file)
 				const createPostResponse = await axios.post(
 					`${BASE_URL}/admin/post`,
 					formData,
@@ -98,7 +99,7 @@ export const postStore = defineStore('postStore', {
 		async subscribePost(subscribeConfig: SubscribeConfig) {
 			try {
 				const formData = new FormData()
-    		formData.append('file', subscribeConfig.key)
+				formData.append('file', subscribeConfig.key)
 
 				const subscribePostResponse = await axios.post(
 					`${BASE_URL}/sign/${subscribeConfig.id}`,
@@ -113,12 +114,11 @@ export const postStore = defineStore('postStore', {
 				if (subscribePostResponse.data.result === 'failed') {
 					this.status = 'failed'
 					console.log(subscribePostResponse.data.data)
-				} else { 
+				} else {
 					this.subscribers.push({
 						id: subscribePostResponse.data.signatures.user.id,
 						name: subscribePostResponse.data.signatures.user.name
-					}
-					) 
+					})
 					this.status = 'success'
 				}
 			} catch (error) {
@@ -176,7 +176,9 @@ export const postStore = defineStore('postStore', {
 		checkSig(userId: number) {
 			let userExists = false
 			if (this.post.signatures)
-				 userExists = this.post.signatures.some(signature => signature.user.id === userId)
+				userExists = this.post.signatures.some(
+					signature => signature.user.id === userId
+				)
 			return userExists
 		},
 

@@ -25,15 +25,16 @@ interface EditConfig {
 
 export const authStore = defineStore('authStore', {
 	state: () => ({
-		id: 0, 
+		id: 0,
 		username: '',
-		name: '', 
+		name: '',
 		role: 'Admin',
-		post: '', 
-		division: '', 
-		key: '', 
-		token: 'dsdsdsd', 
-		status: '', 
+		post: '',
+		division: '',
+		key: '',
+		token:
+			'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0YTFraW4iLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg2NzU2NjgsImV4cCI6MTcyODY4MTY2OH0.iVVmp33uQDwnjnbh7u-krWfSsvlRhssh3h64o2C6r5A',
+		status: ''
 	}),
 
 	actions: {
@@ -54,7 +55,6 @@ export const authStore = defineStore('authStore', {
 					this.name = regConfig.name
 					this.id = regResponse.data.data.id
 				}
-
 			} catch (err: any) {
 				console.info(`Unexpected error: ${err.message}`)
 			}
@@ -84,9 +84,7 @@ export const authStore = defineStore('authStore', {
 
 		async getUser(id: number) {
 			try {
-				const userResponse = await axios.get(
-					`${BASE_URL}/user/${id}`
-				)
+				const userResponse = await axios.get(`${BASE_URL}/user/${id}`)
 
 				if (userResponse.data.result === 'failed') {
 					this.status = 'failed'
@@ -141,13 +139,11 @@ export const authStore = defineStore('authStore', {
 			}
 		},
 
-		 async getChief(id:number) {
-			const userResponse = await axios.get(
-				`${BASE_URL}/user/${id}`
-			)
+		async getChief(id: number) {
+			const userResponse = await axios.get(`${BASE_URL}/user/${id}`)
 			return userResponse.data.name
 		},
-		
+
 		sysExit() {
 			this.id = 0
 			this.username = ''
