@@ -16,7 +16,8 @@
                         ref="fileInput" 
                         class="to-personal__file-input" 
                         @change="handleFileChange" 
-                        multiple accept=".pdf"
+                        multiple 
+                        accept=".pdf"
                         max-files="3">
                 <div class="to-personal__load-files">
                     <ul class="load-files__list">
@@ -78,6 +79,7 @@ const deleteFile = (index: number) => {
 
 const sendItOut = () => {
     isLoaded.value = false
+    files = []
 }
 </script>
 
