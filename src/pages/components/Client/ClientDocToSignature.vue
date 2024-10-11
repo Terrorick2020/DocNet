@@ -33,7 +33,7 @@
                         </li>
                     </ul>
                 </div>
-                <button v-if="isLoaded" class="to-personal__btn" @click="sendItOut">Разослать всем</button>
+                <button v-if="isLoaded" class="to-personal__btn" @click="create_post">Разослать всем</button>
             </div>
             <div v-else class="content__to-chief" title="В разработке" style="padding: 30px;">
                 <p>В разработке</p>
@@ -61,6 +61,8 @@ const create_post = async () => {
 			file: file
 		})
 	}
+    files = []
+    isLoaded.value = false
 }
  
 const infoSearch = () => {
@@ -83,10 +85,6 @@ const deleteFile = (index: number) => {
 	if (index >= 0 && index < files.length) {
 		files.splice(index, 1)
 	}
-}
-
-const sendItOut = () => {
-    console.log( 'Sended' )
 }
 </script>
 

@@ -22,7 +22,7 @@ interface PostConfig {
 
 interface SubscribeConfig {
 	id: number
-	key: FormData
+	key: File
 }
 
 export const postStore = defineStore('postStore', {
@@ -30,7 +30,7 @@ export const postStore = defineStore('postStore', {
 		postList: [] as Post[],
 		post: {} as Post,
 		status: 'success',
-		subscribers: [] as string[]
+		subscribers: [] as Object[]
 	}),
 
 	actions: {
@@ -88,12 +88,15 @@ export const postStore = defineStore('postStore', {
 
 		async subscribePost(subscribeConfig: SubscribeConfig) {
 			try {
+				const formData = new FormData()
+    		formData.append('file', subscribeConfig.key)
+
 				const subscribePostResponse = await axios.post(
 					`${BASE_URL}/sign/${subscribeConfig.id}`,
-					subscribeConfig.key,
+					formData,
 					{
 						headers: {
-							'Content-Type': 'multipart/form-data',
+							// 'Content-Type': 'multipart/form-data',
 							Authorization: `Bearer ${authStore().token}`
 						}
 					}
@@ -101,10 +104,12 @@ export const postStore = defineStore('postStore', {
 				if (subscribePostResponse.data.result === 'failed') {
 					this.status = 'failed'
 					console.log(subscribePostResponse.data.data)
-				} else {
-					this.subscribers.push(
-						subscribePostResponse.data.signatures.user.username
-					)
+				} else { 
+					this.subscribers.push({
+						id: subscribePostResponse.data.signatures.user.id,
+						name: subscribePostResponse.data.signatures.user.name
+					}
+					) 
 					this.status = 'success'
 				}
 			} catch (error) {
