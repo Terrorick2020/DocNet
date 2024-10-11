@@ -1,5 +1,5 @@
 <template>
-	<div class="pdf__status">
+	<div v-if="pdfSrc" class="pdf__status">
 		<div class="status__text">
 			<p>
 				Статус:
