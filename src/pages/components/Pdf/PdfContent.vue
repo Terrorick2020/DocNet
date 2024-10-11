@@ -1,15 +1,21 @@
 <template>
 	<div class="pdf__status">
 		<div class="status__text">
-			<p>Статус: <span :style="`background: ${ pdfStatius === 'Не подписан' ? '' : '' }`">{{ pdfStatius }}</span></p>
+			<p>
+				Статус:
+				<span
+					:style="`background: ${pdfStatius === 'Не подписан' ? '' : ''}`"
+					>{{ pdfStatius }}</span
+				>
+			</p>
 		</div>
 		<form class="status__form">
-			<input type="password" placeholder="ключ">
+			<input type="password" placeholder="ключ" />
 			<button type="button">Ознакомился</button>
 		</form>
 	</div>
 	<div class="main__pdf">
-		<div :style="{ width: '1028px', height: '700px' }">
+		<div class="pdf__content" :style="{ width: '1028px', height: '700px' }">
 			<VPdfViewer v-if="pdfSrc" :src="pdfSrc" base="http://localhost:5173" />
 			<div v-else>
 				<p>PDF не загружен или недоступен</p>
@@ -57,12 +63,11 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
-
 .pdf__status {
 	margin-top: 100px;
 	width: 100%;
 	margin-left: 9%;
-	@include Flex( column, start, start );
+	@include Flex(column, start, start);
 	gap: 40px;
 
 	.status__text {
@@ -78,12 +83,10 @@ onMounted(async () => {
 	}
 
 	.status__form {
-
 		input {
 			padding: 10px 20px;
 			border: 2px solid rgb(86, 78, 57);
 			border-radius: 10px;
-
 		}
 
 		button {
@@ -100,7 +103,6 @@ onMounted(async () => {
 	@include Flex;
 	pointer-events: none;
 
-	
 	.pdf__content {
 		margin-top: 50px;
 	}

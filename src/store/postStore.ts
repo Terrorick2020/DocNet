@@ -17,7 +17,7 @@ interface Post {
 
 interface PostConfig {
 	title: string
-	file: FormData
+	file: File
 }
 
 interface SubscribeConfig {
@@ -54,12 +54,15 @@ export const postStore = defineStore('postStore', {
 
 		async createPost(postConfig: PostConfig) {
 			try {
+				const formData = new FormData()
+    		formData.append('title', postConfig.title)
+    		formData.append('file', postConfig.file)
 				const createPostResponse = await axios.post(
 					`${BASE_URL}/admin/post`,
-					postConfig,
+					formData,
 					{
 						headers: {
-							'Content-Type': 'multipart/form-data',
+							// 'Content-Type': 'multipart/form-data',
 							Authorization: `Bearer ${authStore().token}`
 						}
 					}
