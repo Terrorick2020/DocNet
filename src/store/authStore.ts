@@ -164,5 +164,6 @@ export const authStore = defineStore('authStore', {
 		getUserRole(): boolean {
 			return this.role === 'Admin'
 		}
-	}
+	},
+	persist: true
 })
