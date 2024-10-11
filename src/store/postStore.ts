@@ -11,8 +11,17 @@ interface Post {
 	content: { type: 'Buffer'; data: number[] }
 	date: string
 	delivered?: boolean
-	signatures?: Array<Object>
+	signatures?: Array<User>
 	userId: number
+}
+
+interface User {
+	hash: string
+	user: {
+		id: number
+		username: string
+		name: string
+	}
 }
 
 interface PostConfig {
@@ -162,6 +171,13 @@ export const postStore = defineStore('postStore', {
 			} catch (error) {
 				console.error('Error updating post:', error)
 			}
+		},
+
+		checkSig(userId: number) {
+			let userExists = false
+			if (this.post.signatures)
+				 userExists = this.post.signatures.some(signature => signature.user.id === userId)
+			return userExists
 		},
 
 		sysExit() {
