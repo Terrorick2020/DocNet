@@ -34,7 +34,7 @@
                         </li>
                     </ul>
                 </div>
-                <button v-if="isLoaded" class="to-personal__btn" @click="sendItOut">Разослать всем</button>
+                <button v-if="isLoaded" class="to-personal__btn" @click="create_post">Разослать всем</button>
             </div>
             <div v-else class="content__to-chief" title="В разработке" style="padding: 30px;">
                 <p>В разработке</p>
@@ -44,23 +44,34 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { reactive, ref } from 'vue'
 
-import { authStore } from '../../../store/authStore';
+import { authStore } from '../../../store/authStore'
+import { postStore } from '../../../store/postStore'
 
-
-var isToPersonalType = ref( true )
+var isToPersonalType = ref(true)
+const PostStore = postStore()
 const AuthStore = authStore()
 const fileInput = ref( null )
 var files = reactive<File[]>( [] )
 var isLoaded = ref( false )
+const create_post = async () => {
+	for (const file of files) {
+		await PostStore.createPost({
+			title: file.name,
+			file: file
+		})
+	}
+    files = []
+    isLoaded.value = false
+}
  
 const infoSearch = () => {
-    isToPersonalType.value = true
+	isToPersonalType.value = true
 }
 
 const chatSearch = () => {
-    isToPersonalType.value = false
+	isToPersonalType.value = false
 }
 
 const handleFileChange = (event: Event) => {
@@ -72,14 +83,9 @@ const handleFileChange = (event: Event) => {
 }
 
 const deleteFile = (index: number) => {
-    if (index >= 0 && index < files.length) {
-        files.splice(index, 1);
-    }
-}
-
-const sendItOut = () => {
-    isLoaded.value = false
-    files = []
+	if (index >= 0 && index < files.length) {
+		files.splice(index, 1)
+	}
 }
 </script>
 
