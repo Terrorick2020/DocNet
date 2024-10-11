@@ -9,17 +9,60 @@
 		</form>
 	</div>
 	<div class="main__pdf">
+<<<<<<< HEAD
 		<div class="pdf__content" :style="{ width: '1028px', height: '700px'}">
 			<VPdfViewer src="/src/assets/pdf/3.pdf" base="http://localhost:5173" />
+=======
+		<div :style="{ width: '1028px', height: '700px' }">
+			<VPdfViewer v-if="pdfSrc" :src="pdfSrc" base="http://localhost:5173" />
+			<div v-else>
+				<p>PDF не загружен или недоступен</p>
+			</div>
+>>>>>>> 3253530307c2da9fb192e502dddf928d39526dc3
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
 import { VPdfViewer } from '@vue-pdf-viewer/viewer'
+<<<<<<< HEAD
 
 
 const pdfStatius = 'Не подписан'
+=======
+import { onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
+import { postStore } from '../../../store/postStore'
+
+const PostStore = postStore()
+
+const pdfSrc = ref<string | null>(null)
+
+const route = useRoute()
+const postId = Number(route.params.id)
+
+const fetchPdfBase64 = async (id: number) => {
+	await PostStore.getPost(id)
+
+	const base64Pdf = PostStore.post.content
+
+	if (base64Pdf) {
+		return base64Pdf
+	}
+
+	return null
+}
+
+onMounted(async () => {
+	const base64Pdf = await fetchPdfBase64(postId)
+
+	if (base64Pdf) {
+		pdfSrc.value = `data:application/pdf;base64,${base64Pdf}`
+	} else {
+		console.error('Ошибка: PDF не найден или не загружен.')
+	}
+})
+>>>>>>> 3253530307c2da9fb192e502dddf928d39526dc3
 </script>
 
 <style lang="scss" scoped>
