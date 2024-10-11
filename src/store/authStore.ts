@@ -28,11 +28,11 @@ export const authStore = defineStore('authStore', {
 		id: 0, 
 		username: '',
 		name: '', 
-		role: 'Guest',
+		role: 'Admin',
 		post: '', 
 		division: '', 
 		key: '', 
-		token: '', 
+		token: 'dsdsdsd', 
 		status: '', 
 	}),
 

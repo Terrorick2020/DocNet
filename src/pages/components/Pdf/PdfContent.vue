@@ -9,7 +9,7 @@
 		</form>
 	</div>
 	<div class="main__pdf">
-		<div :style="{ width: '1028px', height: '700px' }">
+		<div class="pdf__content" :style="{ width: '1028px', height: '700px' }">
 			<VPdfViewer v-if="pdfSrc" :src="pdfSrc" base="http://localhost:5173" />
 			<div v-else>
 				<p>PDF не загружен или недоступен</p>
