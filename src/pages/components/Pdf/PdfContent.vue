@@ -1,5 +1,5 @@
 <template>
-	<div v-if="pdfSrc" class="pdf__status">
+	<div v-if="pdfSrc" class="pdf__status box">
 		<div class="status__text">
 			<p>
 				Статус:
@@ -9,14 +9,8 @@
 			</p>
 		</div>
 	</div>
-	<div class="main__pdf">
-		<div class="pdf__content" :style="{ width: '1028px', height: '700px' }">
-			<VPdfViewer v-if="pdfSrc" :src="pdfSrc" base="http://localhost:5173" />
-			<div v-else>
-				<p>PDF не загружен или недоступен!</p>
-			</div>
-		</div>
-	</div>
+	<component :is="PDF" :src="pdfSrc" v-if="pdfSrc" class="box main__pdf" />
+	<p v-else>Документ не загружен или не найден!</p>
 	<form v-if="!isSuccessStatus && pdfSrc" class="status__form">
 		<button type="button">
 			Поставить подпись
@@ -26,39 +20,36 @@
 </template>
 
 <script setup lang="ts">
-import { VPdfViewer } from '@vue-pdf-viewer/viewer'
+import PDF from 'pdf-vue3'
+
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { authStore } from '../../../store/authStore'
 import { postStore } from '../../../store/postStore'
 
-const PostStore = postStore()
 const AuthStore = authStore()
 
 const keyFile = ref<File | null>(null)
 const pdfSrc = ref<string | null>(null)
 const isSuccessStatus = ref(false)
 const route = useRoute()
+const PostStore = postStore()
 const postId = Number(route.params.id)
 
-PostStore.getPost(postId)
-	.then(() => {
+onMounted(async () => {
+	try {
+		await PostStore.getPost(postId)
 		isSuccessStatus.value = PostStore.checkSig(AuthStore.id)
-	})
-	.catch(error => {
+
+		const base64Pdf = PostStore.post.content || null
+
+		if (base64Pdf) {
+			pdfSrc.value = `data:application/pdf;base64,${base64Pdf}`
+		} else {
+			console.error('PDF не найден или не загружен.')
+		}
+	} catch (error) {
 		console.error('Ошибка при получении поста:', error)
-	})
-
-const fetchPdfBase64 = () => {
-	return PostStore.post.content || null
-}
-
-onMounted(() => {
-	const base64Pdf = fetchPdfBase64()
-	if (base64Pdf) {
-		pdfSrc.value = `data:application/pdf;base64,${base64Pdf}`
-	} else {
-		console.error('PDF не найден или не загружен.')
 	}
 })
 
@@ -80,18 +71,16 @@ const handleKeyFileChange = async (event: Event) => {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .pdf__status {
 	margin-top: 100px;
 	width: 100%;
-	margin-left: 8%;
 
 	.status__text {
 		font-size: 20px;
 
 		span {
 			padding: 10px 20px;
-			margin-left: 15px;
 			background: #1bb28a;
 			border-radius: 10px;
 			color: white;
@@ -100,13 +89,21 @@ const handleKeyFileChange = async (event: Event) => {
 }
 
 .main__pdf {
-	margin: 10px 0 10px 0;
-	display: flex;
-	justify-content: center;
-	pointer-events: none;
+	margin: 50px 0;
+	z-index: 100;
 
-	.pdf__content {
-		margin-top: 50px;
+	.pdf-vue3-pageTooltip {
+		background: transparent !important;
+	}
+
+	.pdf-vue3-backToTopBtn {
+		div {
+			cursor: pointer;
+
+			svg {
+				background: transparent;
+			}
+		}
 	}
 }
 
@@ -122,9 +119,6 @@ const handleKeyFileChange = async (event: Event) => {
 		padding: 10px 20px;
 		cursor: pointer;
 		border-radius: 10px;
-		background-color: #1bb28a;
-		color: white;
-		border: none;
 
 		input {
 			position: absolute;
