@@ -9,7 +9,13 @@
 			</p>
 		</div>
 	</div>
-	<component :is="PDF" :src="pdfSrc" v-if="pdfSrc" class="box main__pdf" />
+	<component
+		:is="PDF"
+		:src="pdfSrc"
+		v-if="pdfSrc"
+		style="height: 700px"
+		class="box main__pdf"
+	/>
 	<p v-else>Документ не загружен или не найден!</p>
 	<form v-if="!isSuccessStatus && pdfSrc" class="status__form">
 		<button type="button">
