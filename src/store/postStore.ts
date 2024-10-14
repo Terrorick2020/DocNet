@@ -1,6 +1,9 @@
 import axios from 'axios'
+import { format } from 'date-fns'
+import { ru } from 'date-fns/locale'
 import { defineStore } from 'pinia'
 import { authStore } from './authStore'
+import { pagesStore } from './pagesStore'
 
 const BASE_URL = import.meta.env.VITE_BASE_URL || 'http://localhost:3000/api'
 
@@ -12,7 +15,15 @@ interface Post {
 	date: string
 	delivered?: boolean
 	signatures: Array<User>
+	userName: string
 	userId: number
+}
+
+interface GettingPost {
+	id: number
+	title: string
+	author: string
+	date: string
 }
 
 interface User {
@@ -34,13 +45,19 @@ interface SubscribeConfig {
 	key: File
 }
 
+interface Subscribers {
+	name: string
+	signed: boolean
+}
+
 export const postStore = defineStore('postStore', {
 	state: () => ({
 		postList: [] as Post[],
 		post: {} as Post,
 		status: 'success',
 		err: '',
-		subscribers: [] as Object[]
+		subscribers: [] as Subscribers[],
+		scroll: false
 	}),
 
 	actions: {
@@ -49,7 +66,22 @@ export const postStore = defineStore('postStore', {
 				const postListResponse = await axios.get(`${BASE_URL}/post`, {
 					params: { page: page, limit: limit }
 				})
-				this.postList = postListResponse.data.data
+				if (postListResponse.data.result === 'failed') {
+					this.status = 'failed'
+					this.err = postListResponse.data.data
+				} else {
+					this.status = 'success'
+					const processedPostList = await Promise.all(
+						//@ts-ignore
+						postListResponse.data.data.map(async post => {
+							const userName = await this.getChief(post.userId)
+							return { ...post, userName }
+						})
+					)
+
+					this.postList = processedPostList
+					this.scroll = postListResponse.data.scroll
+				}
 			} catch (error) {
 				console.error('Error fetching post list:', error)
 			}
@@ -107,10 +139,6 @@ export const postStore = defineStore('postStore', {
 				if (subscribePostResponse.data.result === 'failed') {
 					this.status = 'failed'
 				} else {
-					this.subscribers.push({
-						id: subscribePostResponse.data.signatures.user.id,
-						name: subscribePostResponse.data.signatures.user.name
-					})
 					this.status = 'success'
 				}
 			} catch (error) {
@@ -170,17 +198,93 @@ export const postStore = defineStore('postStore', {
 				)
 			return userExists
 		},
+		async getChief(id: number) {
+			const userResponse = await axios.get(`${BASE_URL}/user/${id}`)
+			return userResponse.data.name
+		},
+
+		async getSubs(postId: number) {
+			try {
+				const getSubsResponse = await axios.get(
+					`${BASE_URL}/admin/subs/${postId}`,
+					{
+						headers: {
+							Authorization: `Bearer ${authStore().token}`
+						}
+					}
+				)
+				if (getSubsResponse.data.result === 'failed') {
+					this.status = 'failed'
+					this.err = getSubsResponse.data.data
+				} else {
+					this.status = 'success'
+					this.subscribers = getSubsResponse.data.data
+				}
+			} catch (error) {
+				console.error('Error updating post:', error)
+			}
+		},
 
 		sysExit() {
 			;(this.postList = [] as Post[]),
 				(this.post = {} as Post),
 				(this.status = 'success'),
-				(this.subscribers = [] as string[])
+				(this.subscribers = [] as Subscribers[]),
+				(this.scroll = false)
+		},
+		parseDate(dateString: string): Date {
+			const [day, month, year] = dateString.split('.').map(Number)
+			return new Date(year, month - 1, day)
 		}
 	},
 	getters: {
-		getRenderingPosts(): Post[] {
-			return this.postList
+		getRenderingPosts(): GettingPost[] {
+			if (this.postList) {
+				let PostList
+
+				if (pagesStore().docPage.selectedValue === '0') {
+					//сортировка по наименованию
+					PostList = this.postList.sort((a, b) =>
+						a.title.localeCompare(b.title)
+					)
+				} else if (pagesStore().docPage.selectedValue === '1') {
+					//сортировка по должностному лицу
+					PostList = this.postList.sort((a, b) => a.userId - b.userId)
+				} else {
+					//Сортировка по дате
+					PostList = this.postList.sort(
+						(a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+					)
+				}
+
+				PostList = PostList.map(elem => {
+					return {
+						id: elem.id,
+						title: elem.title,
+						author: elem.userName,
+						date: format(elem.date, 'dd.MM.yyyy', { locale: ru })
+					}
+				})
+
+				if (pagesStore().docPage.searchValue) {
+					PostList = PostList.filter(
+						elem =>
+							elem.title
+								.toLowerCase()
+								.includes(pagesStore().docPage.searchValue.toLowerCase()) ||
+							elem.author
+								.toLowerCase()
+								.includes(pagesStore().docPage.searchValue.toLowerCase()) ||
+							elem.date
+								.toLowerCase()
+								.includes(pagesStore().docPage.searchValue.toLowerCase())
+					)
+				}
+
+				return PostList
+			}
+
+			return []
 		}
 	}
 })
